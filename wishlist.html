@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Wishlist</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo"><a href="home.html"><span>Karigar</span>Co</a></div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="cart.html" class="nav-icon">🛒<span class="badge" id="cartBadge">0</span></a>
+    <a href="wishlist.html" class="nav-icon">♡<span class="badge" id="wishBadge">0</span></a>
+    <a href="profile.html" class="nav-icon">👤</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <h1 class="page-title">My <span>Wishlist</span></h1>
+  <!-- items injected here by renderWish() -->
+  <div class="product-grid" id="wishItems"></div>
+</div>
+
+<a href="#" class="scroll-top" id="scrollTop">↑</a>
+<script src="script.js"></script>
+<script>
+  renderWish();
+  updateBadges();
+</script>
+</body>
+</html>

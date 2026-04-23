@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Product</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Show all product panels by default; in real use, URL param selects one.
+       Here we show product 1 as demo. Each product has its own anchor-targeted panel. */
+    .prod-panel { display: none; }
+    .prod-panel:target { display: block; }
+    /* Default: show product 1 if no hash */
+    .prod-panel.default { display: block; }
+    .prod-panel:target ~ .prod-panel.default { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo"><a href="home.html"><span>Karigar</span>Co</a></div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="cart.html" class="nav-icon">🛒<span class="badge">0</span></a>
+    <a href="wishlist.html" class="nav-icon">♡<span class="badge">0</span></a>
+    <a href="profile.html" class="nav-icon">👤</a>
+  </div>
+</nav>
+
+<!-- PRODUCT 1 (default) -->
+<div id="p1" class="prod-panel default">
+  <div class="product-detail">
+    <div class="product-main-img">
+      <img src="image/img1.jpg" alt="Terracotta Planter Pot" />
+    </div>
+    <div class="product-info">
+      <span class="cat-tag">Pottery</span>
+      <h1>Terracotta Planter Pot</h1>
+      <div class="product-stars">
+        <span class="stars">★★★★☆</span>
+        <span>4.5 · 38 reviews</span>
+      </div>
+      <div class="product-price">₹849</div>
+      <p class="product-desc">Hand-thrown terracotta pot with a matte glaze finish. Crafted by potters from Khurja, UP — each piece is unique with slight natural variations. Perfect for succulents, herbs, and small plants. Has drainage hole. Diameter: 6 inches.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header">
+          <span class="reviewer-name">Priya M.</span>
+          <span class="review-stars">★★★★★</span>
+        </div>
+        <p class="review-text">Absolutely beautiful pot! The texture is wonderful and it looks exactly as shown. My plant looks so much better in it.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="reviewer-name">Rahul S.</span>
+          <span class="review-stars">★★★★☆</span>
+        </div>
+        <p class="review-text">Good quality, arrived safely. Slightly smaller than expected but overall very happy with the purchase.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter your name" />
+      </div>
+      <div class="form-group">
+        <label>Rating</label>
+        <select>
+          <option>★★★★★ — 5 Stars</option>
+          <option>★★★★☆ — 4 Stars</option>
+          <option>★★★☆☆ — 3 Stars</option>
+          <option>★★☆☆☆ — 2 Stars</option>
+          <option>★☆☆☆☆ — 1 Star</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Your Review</label>
+        <textarea rows="4" placeholder="Share your experience..."></textarea>
+      </div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 2 -->
+<div id="p2" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img">
+      <img src="image/img2.jpg" alt="Handwoven Ikat Dupatta" />
+    </div>
+    <div class="product-info">
+      <span class="cat-tag">Textiles</span>
+      <h1>Handwoven Ikat Dupatta</h1>
+      <div class="product-stars">
+        <span class="stars">★★★★★</span>
+        <span>4.8 · 52 reviews</span>
+      </div>
+      <div class="product-price">₹1299</div>
+      <p class="product-desc">Vibrant double-Ikat woven dupatta from Pochampally, Telangana. 100% pure cotton with natural dyes. The geometric patterns are woven directly into the fabric — not printed. Size: 2.5 metres. Hand wash recommended.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header">
+          <span class="reviewer-name">Ananya K.</span>
+          <span class="review-stars">★★★★★</span>
+        </div>
+        <p class="review-text">The colours are even more vibrant in person! Excellent quality weaving. Will buy again.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 3 -->
+<div id="p3" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img3.jpg" alt="Silver Jhumka Earrings" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Jewelry</span>
+      <h1>Silver Jhumka Earrings</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.7 · 61 reviews</span></div>
+      <div class="product-price">₹650</div>
+      <p class="product-desc">Sterling silver jhumkas with intricate filigree work. Lightweight and comfortable for all-day wear. Made by silver artisans from Cuttack, Odisha. 92.5% pure silver. Hook closure. Weight: 12g.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Meera R.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">So delicate and beautiful! Perfect weight — not too heavy. I wear them every day.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 4 -->
+<div id="p4" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img4.jpg" alt="Sheesham Wood Serving Tray" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Wooden</span>
+      <h1>Sheesham Wood Serving Tray</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.3 · 29 reviews</span></div>
+      <div class="product-price">₹1150</div>
+      <p class="product-desc">Hand-carved Indian rosewood (Sheesham) tray with engraved floral borders. Food-safe natural oil finish. Perfect for serving breakfast or as a decorative piece. Size: 14×10 inches. Handles on both sides.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Vikram P.</span><span class="review-stars">★★★★☆</span></div>
+        <p class="review-text">Solid and well-crafted. The wood grain is beautiful. Exactly what I wanted for my kitchen.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 5 -->
+<div id="p5" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img5.jpg" alt="Madhubani Wall Painting" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Paintings</span>
+      <h1>Madhubani Wall Painting</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.9 · 74 reviews</span></div>
+      <div class="product-price">₹1800</div>
+      <p class="product-desc">Authentic hand-painted Madhubani art on handmade paper from Mithila, Bihar. Uses vivid natural mineral colours. Each painting is unique. Features the traditional fish-peacock motif. Framed size: 12×16 inches. Certificate of authenticity included.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Sunita D.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Absolutely stunning! The detail is incredible. It's now the centrepiece of my living room.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 6 -->
+<div id="p6" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img6.jpg" alt="Soy Wax Kadai Candle" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Candles</span>
+      <h1>Soy Wax Kadai Candle</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.6 · 43 reviews</span></div>
+      <div class="product-price">₹420</div>
+      <p class="product-desc">Natural soy wax candle poured into a mini iron kadai. Warm amber and sandalwood fragrance. Burn time: 30 hours. Cotton wick. No synthetic dyes. Handmade in small batches. Diameter: 3.5 inches.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Nisha T.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">The fragrance is divine and very long lasting. Such a cute presentation too. Will gift these!</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 7 -->
+<div id="p7" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img7.jpg" alt="Blue Pottery Chai Set" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Pottery</span>
+      <h1>Blue Pottery Chai Set</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.9 · 89 reviews</span></div>
+      <div class="product-price">₹1650</div>
+      <p class="product-desc">Authentic Jaipur blue pottery chai set — 4 cups and a teapot. Each piece hand-painted with traditional floral motifs using cobalt blue. Lead-free glaze. Dishwasher safe. Gift-boxed. A true piece of Rajasthani craft heritage.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Arjun B.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">My guests are always amazed when I serve chai in these. Absolutely gorgeous set. Worth every rupee.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 8 -->
+<div id="p8" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img8.jpg" alt="Warli Art Wooden Frame" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Paintings</span>
+      <h1>Warli Art Wooden Frame</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.4 · 35 reviews</span></div>
+      <div class="product-price">₹950</div>
+      <p class="product-desc">Traditional Warli tribal painting on a hand-carved wooden frame. White pigment on terracotta-toned canvas. Depicts a village harvest dance scene. Made by Warli artists from Palghar, Maharashtra. Size: 10×12 inches.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Pooja V.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Such a unique and meaningful piece of art. The story behind the Warli tradition makes it even more special.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 9 -->
+<div id="p9" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img9.jpg" alt="Bamboo Jewellery Box" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Wooden</span>
+      <h1>Bamboo Jewellery Box</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.2 · 27 reviews</span></div>
+      <div class="product-price">₹780</div>
+      <p class="product-desc">Eco-friendly bamboo jewellery box with soft velvet lining. 3 compartments and a mirror inside the lid. Laser-etched floral pattern on the lid. Magnetic clasp closure. Size: 7×5×3 inches. Sustainably sourced bamboo.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Kavita L.</span><span class="review-stars">★★★★☆</span></div>
+        <p class="review-text">Very well made and looks premium. The velvet lining is soft and the mirror is a great touch.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 10 -->
+<div id="p10" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img10.jpg" alt="Handblock Print Kurta" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Textiles</span>
+      <h1>Handblock Print Kurta</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.7 · 56 reviews</span></div>
+      <div class="product-price">₹1499</div>
+      <p class="product-desc">Block-printed cotton kurta from Jaipur. Breathable 100% cotton fabric with AZO-free natural dyes. Traditional geometric block pattern. Available in M, L, XL. Machine washable. Slightly longer back hem for traditional silhouette.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Rohan G.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Incredibly comfortable and the print is stunning. Perfect for both casual and formal occasions.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 11 -->
+<div id="p11" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img11.jpg" alt="Brass Ganesha Idol" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Wooden</span>
+      <h1>Brass Ganesha Idol</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.8 · 102 reviews</span></div>
+      <div class="product-price">₹2100</div>
+      <p class="product-desc">Lost-wax cast solid brass Ganesha idol with antique finish. 6 inch height. Made using the traditional Dhokra casting technique by artisans from Bastar, Chhattisgarh. Each piece is individually handfinished. Ideal as a home decor or gift.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Shyam I.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Extraordinary craftsmanship. The weight and finish are premium. Looks beautiful on my puja shelf.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 12 -->
+<div id="p12" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img12.jpg" alt="Rose & Oud Candle Jar" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Candles</span>
+      <h1>Rose &amp; Oud Candle Jar</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.7 · 48 reviews</span></div>
+      <div class="product-price">₹550</div>
+      <p class="product-desc">Premium coconut wax candle in a reusable amber glass jar. Rose and oud fragrance blend — deep, warm, and luxurious. Burn time: 45 hours. Cotton wick. No parabens or sulphates. Handpoured in Delhi. Also makes a beautiful vase once burned.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <a href="cart.html" class="btn btn-solid">🛒 Buy Now</a>
+          <a href="cart.html" class="btn btn-outline">Add to Cart</a>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Dia F.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">The most gorgeous scent. My whole house smells like a luxury hotel now. Will buy every month!</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- Scroll to top -->
+<a href="#" class="scroll-top" id="scrollTop">↑</a>
+<script src="script.js"></script>
+</body>
+</html>
+<!-- PRODUCT 13 — Rajasthani Lac Bangles -->
+<div id="p13" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img13.jpg" alt="Rajasthani Lac Bangles" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Jewelry</span>
+      <h1>Rajasthani Lac Bangles</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.4 · 33 reviews</span></div>
+      <div class="product-price">₹390</div>
+      <p class="product-desc">Handcrafted lac bangles with mirror and thread work from Jaipur. Set of 6 bangles in assorted colours. Made by Manihaar artisans using traditional lac techniques passed down for generations. Adjustable sizes available.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <button class="btn btn-solid" onclick="addCart('p13','Rajasthani Lac Bangles',390,'image/img13.jpg','Jewelry')">🛒 Buy Now</button>
+          <button class="btn btn-outline" onclick="addCart('p13','Rajasthani Lac Bangles',390,'image/img13.jpg','Jewelry')">Add to Cart</button>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" data-id="p13" data-name="Rajasthani Lac Bangles" data-price="390" data-img="image/img13.jpg" data-cat="Jewelry" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Simran K.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Absolutely gorgeous! The colours are so vibrant and they look stunning on the wrist.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 14 — Kashmiri Papier Mache Box -->
+<div id="p14" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img14.jpg" alt="Kashmiri Papier Mache Box" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Paintings</span>
+      <h1>Kashmiri Papier Mache Box</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.8 · 41 reviews</span></div>
+      <div class="product-price">₹720</div>
+      <p class="product-desc">Hand-painted papier mache keepsake box with intricate floral motifs from Kashmir. Each box is individually hand-crafted and painted using natural pigments. Perfect as a jewellery box or gift. Size: 5×3×2 inches.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <button class="btn btn-solid" onclick="addCart('p14','Kashmiri Papier Mache Box',720,'image/img14.jpg','Paintings')">🛒 Buy Now</button>
+          <button class="btn btn-outline" onclick="addCart('p14','Kashmiri Papier Mache Box',720,'image/img14.jpg','Paintings')">Add to Cart</button>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" data-id="p14" data-name="Kashmiri Papier Mache Box" data-price="720" data-img="image/img14.jpg" data-cat="Paintings" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Fatima N.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">The painting detail is extraordinary. It looks like a tiny work of art. Gifted it to my mother and she loved it.</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 15 — Phulkari Embroidered Cushion -->
+<div id="p15" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img15.jpg" alt="Phulkari Embroidered Cushion" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Textiles</span>
+      <h1>Phulkari Embroidered Cushion</h1>
+      <div class="product-stars"><span class="stars">★★★★★</span><span>4.6 · 28 reviews</span></div>
+      <div class="product-price">₹950</div>
+      <p class="product-desc">Vibrant Phulkari embroidered cushion cover from Punjab. Hand-embroidered by women artisans using bright silk threads on pure cotton. 16×16 inch. Zipper closure. Cushion insert not included.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <button class="btn btn-solid" onclick="addCart('p15','Phulkari Embroidered Cushion',950,'image/img15.jpg','Textiles')">🛒 Buy Now</button>
+          <button class="btn btn-outline" onclick="addCart('p15','Phulkari Embroidered Cushion',950,'image/img15.jpg','Textiles')">Add to Cart</button>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" data-id="p15" data-name="Phulkari Embroidered Cushion" data-price="950" data-img="image/img15.jpg" data-cat="Textiles" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Harpreet S.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Beautiful embroidery, very dense and even. Brightens up my whole sofa. Worth every rupee!</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT 16 — Kondapalli Wooden Toy Set -->
+<div id="p16" class="prod-panel">
+  <div class="product-detail">
+    <div class="product-main-img"><img src="image/img16.jpg" alt="Kondapalli Wooden Toy Set" /></div>
+    <div class="product-info">
+      <span class="cat-tag">Wooden</span>
+      <h1>Kondapalli Wooden Toy Set</h1>
+      <div class="product-stars"><span class="stars">★★★★☆</span><span>4.5 · 22 reviews</span></div>
+      <div class="product-price">₹680</div>
+      <p class="product-desc">Traditional hand-painted Kondapalli wooden toys from Andhra Pradesh. Set of 4 figures — farmer, bullock, peacock, and pot-maker. Made from soft Tella Poniki wood. Natural non-toxic paints. Great as a decorative set or children's gift.</p>
+      <div class="product-actions">
+        <div class="product-actions-row">
+          <button class="btn btn-solid" onclick="addCart('p16','Kondapalli Wooden Toy Set',680,'image/img16.jpg','Wooden')">🛒 Buy Now</button>
+          <button class="btn btn-outline" onclick="addCart('p16','Kondapalli Wooden Toy Set',680,'image/img16.jpg','Wooden')">Add to Cart</button>
+        </div>
+        <button class="btn btn-gray btn-full wish-btn" data-wished="0" data-id="p16" data-name="Kondapalli Wooden Toy Set" data-price="680" data-img="image/img16.jpg" data-cat="Wooden" onclick="toggleWish(this)">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-section">
+    <div class="reviews-title">Customer Reviews</div>
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header"><span class="reviewer-name">Lakshmi R.</span><span class="review-stars">★★★★★</span></div>
+        <p class="review-text">Such a unique and charming set. The colours are bright and the craftsmanship is excellent. My kids love them!</p>
+      </div>
+    </div>
+    <div class="review-form">
+      <h3>Write a Review</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" /></div>
+      <div class="form-group"><label>Rating</label><select><option>★★★★★ — 5 Stars</option><option>★★★★☆ — 4 Stars</option><option>★★★☆☆ — 3 Stars</option><option>★★☆☆☆ — 2 Stars</option><option>★☆☆☆☆ — 1 Star</option></select></div>
+      <div class="form-group"><label>Your Review</label><textarea rows="4" placeholder="Share your experience..."></textarea></div>
+      <button class="btn btn-solid" style="margin-top:8px;" onclick="submitReview(this)">Submit Review</button>
+    </div>
+  </div>
+</div>

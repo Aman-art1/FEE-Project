@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Profile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo"><a href="home.html"><span>Karigar</span>Co</a></div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="cart.html" class="nav-icon">🛒<span class="badge" id="cartBadge">0</span></a>
+    <a href="wishlist.html" class="nav-icon">♡<span class="badge" id="wishBadge">0</span></a>
+    <a href="profile.html" class="nav-icon">👤</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <h1 class="page-title">My <span>Profile</span></h1>
+
+  <div class="profile-layout">
+
+    <!-- LEFT CARD -->
+    <div class="profile-card">
+      <div class="profile-avatar">👤</div>
+      <!-- filled by loadProfile() -->
+      <h3 id="profName">—</h3>
+      <p id="profEmail">—</p>
+      <div class="profile-links">
+        <a href="cart.html">🛒 My Cart</a>
+        <a href="wishlist.html">♡ My Wishlist</a>
+        <a href="order.html">📦 My Orders</a>
+      </div>
+      <a href="index.html" class="logout-btn" onclick="logout(); return false;">🚪 Logout</a>
+    </div>
+
+    <!-- RIGHT INFO BOX -->
+    <div class="profile-info-box">
+      <h3>Account Information</h3>
+      <div class="info-row">
+        <span class="info-label">Full Name</span>
+        <span class="info-value" id="infoName">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Email Address</span>
+        <span class="info-value" id="infoEmail">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Account Type</span>
+        <span class="info-value">Customer</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Cart Items</span>
+        <span class="info-value" id="infoCart">0</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Wishlist Items</span>
+        <span class="info-value" id="infoWish">0</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<a href="#" class="scroll-top" id="scrollTop">↑</a>
+<script src="script.js"></script>
+<script>
+  // fill profile from localStorage
+  var u = JSON.parse(localStorage.getItem('user') || '{}');
+  var n = u.name  || 'Guest';
+  var e = u.email || '';
+
+  document.getElementById('profName').textContent  = n;
+  document.getElementById('profEmail').textContent = e;
+  document.getElementById('infoName').textContent  = n;
+  document.getElementById('infoEmail').textContent = e;
+  document.getElementById('infoCart').textContent  = getCart().length + ' Items';
+  document.getElementById('infoWish').textContent  = getWish().length + ' Items';
+  updateBadges();
+</script>
+</body>
+</html>

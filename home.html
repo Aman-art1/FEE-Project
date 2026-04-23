@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Home</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo"><span>Karigar</span>Co</div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="cart.html" class="nav-icon">🛒<span class="badge" id="cartBadge">0</span></a>
+    <a href="wishlist.html" class="nav-icon">♡<span class="badge" id="wishBadge">0</span></a>
+    <a href="profile.html" class="nav-icon">👤</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Crafted by Hand,<br><em>Made with Heart</em></h1>
+    <p>Discover authentic handmade products from India's finest artisans.<br>Every piece tells a story.</p>
+    <div class="hero-btns">
+      <a href="cart.html" class="btn btn-outline">🛒 View Cart</a>
+      <a href="wishlist.html" class="btn btn-outline">♡ Wishlist</a>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="image/hero.jpg" alt="Handmade products" />
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Search for handmade products, crafts..." />
+    <button type="button" onclick="doSearch()">🔍</button>
+  </div>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<section class="section">
+  <h2 class="section-title">Shop by <span>Category</span></h2>
+  <p class="section-sub">Browse our handpicked artisan collections</p>
+
+  <div class="cat-pills">
+    <span class="pill active" data-cat="all"       onclick="filterCat(this,'all')">All</span>
+    <span class="pill"        data-cat="pottery"   onclick="filterCat(this,'pottery')">🏺 Pottery</span>
+    <span class="pill"        data-cat="textiles"  onclick="filterCat(this,'textiles')">🧵 Textiles</span>
+    <span class="pill"        data-cat="jewelry"   onclick="filterCat(this,'jewelry')">💍 Jewelry</span>
+    <span class="pill"        data-cat="wooden"    onclick="filterCat(this,'wooden')">🪵 Wooden</span>
+    <span class="pill"        data-cat="paintings" onclick="filterCat(this,'paintings')">🖼 Paintings</span>
+    <span class="pill"        data-cat="candles"   onclick="filterCat(this,'candles')">🕯 Candles</span>
+  </div>
+
+  <h2 class="section-title" style="margin-bottom:24px;">Our <span>Products</span></h2>
+
+  <div class="product-grid" id="productGrid">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img1.jpg" alt="Terracotta Planter Pot" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p1" data-name="Terracotta Planter Pot" data-price="849"
+          data-img="image/img1.jpg" data-cat="Pottery" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Pottery</span>
+        <h3 class="card-title">Terracotta Planter Pot</h3>
+        <p class="card-desc">Hand-thrown terracotta pot with a matte glaze finish.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.5</span></div>
+          <span class="price">₹849</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p1" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p1','Terracotta Planter Pot',849,'image/img1.jpg','Pottery')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img2.jpg" alt="Handwoven Ikat Dupatta" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p2" data-name="Handwoven Ikat Dupatta" data-price="1299"
+          data-img="image/img2.jpg" data-cat="Textiles" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Textiles</span>
+        <h3 class="card-title">Handwoven Ikat Dupatta</h3>
+        <p class="card-desc">Vibrant double-Ikat woven dupatta from Pochampally. Pure cotton.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.8</span></div>
+          <span class="price">₹1299</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p2" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p2','Handwoven Ikat Dupatta',1299,'image/img2.jpg','Textiles')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img3.jpg" alt="Silver Jhumka Earrings" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p3" data-name="Silver Jhumka Earrings" data-price="650"
+          data-img="image/img3.jpg" data-cat="Jewelry" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Jewelry</span>
+        <h3 class="card-title">Silver Jhumka Earrings</h3>
+        <p class="card-desc">Sterling silver jhumkas with intricate filigree work. Lightweight.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.7</span></div>
+          <span class="price">₹650</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p3" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p3','Silver Jhumka Earrings',650,'image/img3.jpg','Jewelry')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img4.jpg" alt="Sheesham Wood Serving Tray" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p4" data-name="Sheesham Wood Serving Tray" data-price="1150"
+          data-img="image/img4.jpg" data-cat="Wooden" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Wooden</span>
+        <h3 class="card-title">Sheesham Wood Serving Tray</h3>
+        <p class="card-desc">Hand-carved Indian rosewood tray with floral borders. Food-safe.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.3</span></div>
+          <span class="price">₹1150</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p4" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p4','Sheesham Wood Serving Tray',1150,'image/img4.jpg','Wooden')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img5.jpg" alt="Madhubani Wall Painting" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p5" data-name="Madhubani Wall Painting" data-price="1800"
+          data-img="image/img5.jpg" data-cat="Paintings" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Paintings</span>
+        <h3 class="card-title">Madhubani Wall Painting</h3>
+        <p class="card-desc">Hand-painted Madhubani art on handmade paper. Vivid natural colours.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.9</span></div>
+          <span class="price">₹1800</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p5" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p5','Madhubani Wall Painting',1800,'image/img5.jpg','Paintings')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img6.jpg" alt="Soy Wax Kadai Candle" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p6" data-name="Soy Wax Kadai Candle" data-price="420"
+          data-img="image/img6.jpg" data-cat="Candles" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Candles</span>
+        <h3 class="card-title">Soy Wax Kadai Candle</h3>
+        <p class="card-desc">Natural soy wax candle in an iron kadai. Warm amber fragrance.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.6</span></div>
+          <span class="price">₹420</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p6" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p6','Soy Wax Kadai Candle',420,'image/img6.jpg','Candles')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img7.jpg" alt="Blue Pottery Chai Set" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p7" data-name="Blue Pottery Chai Set" data-price="1650"
+          data-img="image/img7.jpg" data-cat="Pottery" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Pottery</span>
+        <h3 class="card-title">Blue Pottery Chai Set</h3>
+        <p class="card-desc">Jaipur blue pottery chai set — 4 cups and a teapot. Hand-painted.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.9</span></div>
+          <span class="price">₹1650</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p7" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p7','Blue Pottery Chai Set',1650,'image/img7.jpg','Pottery')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img8.jpg" alt="Warli Art Wooden Frame" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p8" data-name="Warli Art Wooden Frame" data-price="950"
+          data-img="image/img8.jpg" data-cat="Paintings" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Paintings</span>
+        <h3 class="card-title">Warli Art Wooden Frame</h3>
+        <p class="card-desc">Traditional Warli tribal painting on a hand-carved wooden frame.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.4</span></div>
+          <span class="price">₹950</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p8" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p8','Warli Art Wooden Frame',950,'image/img8.jpg','Paintings')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img9.jpg" alt="Bamboo Jewellery Box" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p9" data-name="Bamboo Jewellery Box" data-price="780"
+          data-img="image/img9.jpg" data-cat="Wooden" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Wooden</span>
+        <h3 class="card-title">Bamboo Jewellery Box</h3>
+        <p class="card-desc">Eco-friendly bamboo jewellery box with velvet lining. 3 compartments.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.2</span></div>
+          <span class="price">₹780</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p9" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p9','Bamboo Jewellery Box',780,'image/img9.jpg','Wooden')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img10.jpg" alt="Handblock Print Kurta" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p10" data-name="Handblock Print Kurta" data-price="1499"
+          data-img="image/img10.jpg" data-cat="Textiles" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Textiles</span>
+        <h3 class="card-title">Handblock Print Kurta</h3>
+        <p class="card-desc">Block-printed cotton kurta from Jaipur. Breathable, natural dyes.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.7</span></div>
+          <span class="price">₹1499</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p10" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p10','Handblock Print Kurta',1499,'image/img10.jpg','Textiles')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 11 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img11.jpg" alt="Brass Ganesha Idol" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p11" data-name="Brass Ganesha Idol" data-price="2100"
+          data-img="image/img11.jpg" data-cat="Wooden" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Wooden</span>
+        <h3 class="card-title">Brass Ganesha Idol</h3>
+        <p class="card-desc">Lost-wax cast brass Ganesha idol. Antique finish. 6 inch height.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.8</span></div>
+          <span class="price">₹2100</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p11" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p11','Brass Ganesha Idol',2100,'image/img11.jpg','Wooden')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 12 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img12.jpg" alt="Rose & Oud Candle Jar" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p12" data-name="Rose &amp; Oud Candle Jar" data-price="550"
+          data-img="image/img12.jpg" data-cat="Candles" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Candles</span>
+        <h3 class="card-title">Rose &amp; Oud Candle Jar</h3>
+        <p class="card-desc">Coconut wax candle in a reusable glass jar. Rose and oud fragrance.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.7</span></div>
+          <span class="price">₹550</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p12" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p12','Rose &amp; Oud Candle Jar',550,'image/img12.jpg','Candles')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 13 — NEW -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img13.jpg" alt="Rajasthani Lac Bangles" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p13" data-name="Rajasthani Lac Bangles" data-price="390"
+          data-img="image/img13.jpg" data-cat="Jewelry" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Jewelry</span>
+        <h3 class="card-title">Rajasthani Lac Bangles</h3>
+        <p class="card-desc">Handcrafted lac bangles with mirror and thread work from Jaipur. Set of 6.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.4</span></div>
+          <span class="price">₹390</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p13" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p13','Rajasthani Lac Bangles',390,'image/img13.jpg','Jewelry')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 14 — NEW -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img14.jpg" alt="Kashmiri Papier Mache Box" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p14" data-name="Kashmiri Papier Mache Box" data-price="720"
+          data-img="image/img14.jpg" data-cat="Paintings" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Paintings</span>
+        <h3 class="card-title">Kashmiri Papier Mache Box</h3>
+        <p class="card-desc">Hand-painted papier mache keepsake box with floral motifs from Kashmir.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.8</span></div>
+          <span class="price">₹720</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p14" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p14','Kashmiri Papier Mache Box',720,'image/img14.jpg','Paintings')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 15 — NEW -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img15.jpg" alt="Phulkari Embroidered Cushion" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p15" data-name="Phulkari Embroidered Cushion" data-price="950"
+          data-img="image/img15.jpg" data-cat="Textiles" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Textiles</span>
+        <h3 class="card-title">Phulkari Embroidered Cushion</h3>
+        <p class="card-desc">Vibrant Phulkari embroidered cushion cover from Punjab. Pure cotton, 16×16 inch.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★★</span><span class="rating-val">4.6</span></div>
+          <span class="price">₹950</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p15" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p15','Phulkari Embroidered Cushion',950,'image/img15.jpg','Textiles')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 16 — NEW -->
+    <div class="card">
+      <div class="card-img">
+        <img src="image/img16.jpg" alt="Kondapalli Wooden Toy Set" />
+        <button class="wish-btn" onclick="toggleWish(this)" data-wished="0"
+          data-id="p16" data-name="Kondapalli Wooden Toy Set" data-price="680"
+          data-img="image/img16.jpg" data-cat="Wooden" title="Add to Wishlist">♡</button>
+      </div>
+      <div class="card-body">
+        <span class="cat-tag">Wooden</span>
+        <h3 class="card-title">Kondapalli Wooden Toy Set</h3>
+        <p class="card-desc">Traditional hand-painted Kondapalli wooden toys from Andhra Pradesh. Set of 4.</p>
+        <div class="card-meta">
+          <div><span class="stars">★★★★☆</span><span class="rating-val">4.5</span></div>
+          <span class="price">₹680</span>
+        </div>
+        <div class="card-actions">
+          <a href="product.html#p16" class="btn btn-outline">View</a>
+          <button class="btn btn-solid" onclick="addCart('p16','Kondapalli Wooden Toy Set',680,'image/img16.jpg','Wooden')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end product-grid -->
+</section>
+
+<!-- ABOUT / OUR STORY -->
+<div class="about-section">
+  <div class="about-text">
+    <h2>Our <span>Story</span></h2>
+    <p>KarigarCo was born from a simple belief — that the skilled hands of India's artisans deserve a platform as refined as their craft. We connect traditional craftspeople from villages across India directly with customers who value authenticity.</p>
+    <p>Every product on KarigarCo is handmade, ethically sourced, and comes with the story of the artisan who created it. When you buy here, you support a family, preserve a tradition, and own something truly one of a kind.</p>
+    <a href="cart.html" class="btn btn-solid" style="margin-top:8px;">Shop Now</a>
+  </div>
+  <div class="about-img">
+    <img src="image/about.jpg" alt="Artisan at work" />
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span>Karigar</span>Co</div>
+      <p>Connecting India's finest artisans with people who value authenticity and craft.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="home.html">All Products</a>
+      <a href="home.html">Pottery</a>
+      <a href="home.html">Textiles</a>
+      <a href="home.html">Jewelry</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="profile.html">My Account</a>
+      <a href="cart.html">My Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="checkout.html">Checkout</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>📧 hello@karigarco.in</p>
+      <p>📞 +91 98765 43210</p>
+      <p>📍 Jaipur, Rajasthan, India</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 KarigarCo. All rights reserved. Made with ♥ in India.</div>
+</footer>
+
+<a href="#" class="scroll-top" id="scrollTop">↑</a>
+
+<script src="script.js"></script>
+<script>
+  document.getElementById('searchInput').addEventListener('keyup', doSearch);
+  updateBadges();
+</script>
+</body>
+</html>

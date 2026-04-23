@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; }
+
+    .auth-page   { display:flex; min-height:100vh; background:var(--light); }
+
+    /* left hero panel */
+    .auth-hero   { flex:0 0 52%; background:#EDE5D8; display:flex; flex-direction:column; padding:48px 56px; position:relative; overflow:hidden; }
+    .auth-hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse 70% 60% at 30% 80%, rgba(192,98,47,.10) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .hero-circle { position:absolute; width:420px; height:420px; border-radius:50%; border:1px solid rgba(192,98,47,.12); top:50%; left:50%; transform:translate(-30%,-40%); }
+    .hero-logo   { font-family: Georgia, "Times New Roman", serif; font-size:22px; font-weight:600; color:var(--black); position:relative; z-index:1; }
+    .hero-logo span { color:var(--terra); font-style:italic; }
+    .hero-tagline { margin-top:auto; position:relative; z-index:1; }
+    .hero-tagline h1 { font-family: Georgia, "Times New Roman", serif; font-size:clamp(40px,5vw,62px); font-weight:400; line-height:1.12; }
+    .hero-tagline h1 em { font-style:italic; color:var(--terra); display:block; }
+    .hero-tagline p  { margin-top:16px; font-size:14px; color:var(--gray); font-weight:300; }
+    .hero-card  { margin-top:40px; background:#fff; border-radius:20px; padding:28px 32px; display:flex; align-items:center; gap:14px; width:fit-content; box-shadow:0 4px 24px rgba(28,22,18,.10); position:relative; z-index:1; }
+    .hero-card-icon { width:36px; height:36px; background:var(--terra); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; }
+    .hero-card span { font-size:13px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
+
+    /* right auth panel */
+    .auth-box { flex:1; display:flex; flex-direction:column; justify-content:center; padding:56px clamp(32px,6vw,80px); background:#fff; }
+
+    /* tabs */
+    .tab-radio { display:none; }
+    .auth-tabs  { display:flex; border-bottom:1px solid var(--border); margin-bottom:32px; }
+    .auth-tab-label { flex:1; text-align:center; padding:12px 0; font-size:14px; font-weight:500; color:var(--gray); cursor:pointer; position:relative; }
+    .auth-tab-label::after { content:''; position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--terra); transform:scaleX(0); transition:transform .25s; }
+    #tab-login:checked  ~ .auth-tabs label[for="tab-login"],
+    #tab-signup:checked ~ .auth-tabs label[for="tab-signup"]  { color:var(--terra); }
+    #tab-login:checked  ~ .auth-tabs label[for="tab-login"]::after,
+    #tab-signup:checked ~ .auth-tabs label[for="tab-signup"]::after { transform:scaleX(1); }
+
+    .panels { position:relative; }
+    .tab-panel { display:none; }
+    #tab-login:checked  ~ .panels #panel-login  { display:block; }
+    #tab-signup:checked ~ .panels #panel-signup { display:block; }
+
+    .panel-heading h2 { font-family: Georgia, "Times New Roman", serif; font-size:32px; font-weight:600; margin-bottom:6px; }
+    .panel-heading p  { font-size:13.5px; color:var(--gray); font-weight:300; margin-bottom:24px; }
+
+    .btn-google { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:12px 20px; border:1.5px solid var(--border); border-radius:10px; background:#fff; font-size:13.5px; font-weight:500; cursor:pointer; text-decoration:none; color:var(--black); margin-bottom:20px; transition:border-color .2s; }
+    .btn-google:hover { border-color:var(--terra); }
+
+    .divider { display:flex; align-items:center; gap:12px; margin-bottom:20px; color:var(--gray); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border); }
+
+    .form-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .form-check { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--gray); cursor:pointer; }
+    .form-check input { accent-color:var(--terra); }
+    .forgot-link { font-size:13px; color:var(--gray); text-decoration:none; }
+    .forgot-link:hover { color:var(--terra); }
+
+    .btn-solid-auth { display:block; width:100%; padding:13px; background:var(--terra); color:#fff; font-family:inherit; font-size:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; text-align:center; border-radius:10px; border:none; cursor:pointer; box-shadow:0 4px 16px rgba(192,98,47,.30); }
+    .btn-solid-auth:hover { background:var(--terra-dark); }
+
+    .form-hint { margin-top:18px; font-size:13px; color:var(--gray); text-align:center; }
+    .form-hint label { color:var(--terra); font-weight:600; cursor:pointer; }
+
+    @media(max-width:768px) {
+      .auth-page { flex-direction:column; }
+      .auth-hero { flex:none; padding:32px 24px; min-height:200px; }
+      .hero-circle { display:none; }
+      .auth-box { padding:36px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="auth-page">
+
+  <!-- LEFT PANEL -->
+  <div class="auth-hero">
+    <div class="hero-circle"></div>
+    <div class="hero-logo">Karigar<span>Co.</span></div>
+    <div class="hero-tagline">
+      <h1>The soul of India,<em>handcrafted.</em></h1>
+      <p>Connecting artisans with the world, one craft at a time.</p>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">✦</div>
+      <span>KarigarCo.</span>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-box">
+    <input type="radio" name="auth-tab" id="tab-login" class="tab-radio" checked />
+    <input type="radio" name="auth-tab" id="tab-signup" class="tab-radio" />
+
+    <div class="auth-tabs">
+      <label for="tab-login" class="auth-tab-label">Log In</label>
+      <label for="tab-signup" class="auth-tab-label">Sign Up</label>
+    </div>
+
+    <div class="panels">
+
+      <!-- LOGIN -->
+      <div id="panel-login" class="tab-panel">
+        <div class="panel-heading">
+          <h2>Welcome back</h2>
+          <p>Please enter your details to sign in.</p>
+        </div>
+        <a href="#" class="btn-google">
+          <span style="width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;background:#4285F4;color:#fff;font-weight:700;font-size:12px;line-height:1;">G</span>
+          Continue with Google
+        </a>
+        <div class="divider">or log in with email</div>
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" placeholder="name@example.com" />
+        </div>
+        <div class="form-group" style="margin-top:12px;">
+          <label for="login-pass">Password</label>
+          <input type="password" id="login-pass" placeholder="••••••••" />
+        </div>
+        <div class="form-meta" style="margin-top:10px;">
+          <label class="form-check"><input type="checkbox" /> Remember me</label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        <button class="btn-solid-auth" onclick="doLogin()">Sign In</button>
+        <p class="form-hint">Don't have an account? <label for="tab-signup">Sign Up</label></p>
+      </div>
+
+      <!-- SIGNUP -->
+      <div id="panel-signup" class="tab-panel">
+        <div class="panel-heading">
+          <h2>Create account</h2>
+          <p>Join India's handmade marketplace today.</p>
+        </div>
+        <div class="form-group">
+          <label for="su-name">Full Name</label>
+          <input type="text" id="su-name" placeholder="Your full name" />
+        </div>
+        <div class="form-group" style="margin-top:12px;">
+          <label for="su-email">Email Address</label>
+          <input type="email" id="su-email" placeholder="you@gmail.com" />
+        </div>
+        <div class="form-group" style="margin-top:12px;">
+          <label for="su-pass">Password</label>
+          <input type="password" id="su-pass" placeholder="Minimum 6 characters" minlength="6" />
+        </div>
+        <button class="btn-solid-auth" style="margin-top:20px;" onclick="doSignup()">Create Account</button>
+        <p class="form-hint">Already have an account? <label for="tab-login">Login</label></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  function doLogin() {
+    var email = document.getElementById('login-email').value.trim();
+    var pass  = document.getElementById('login-pass').value;
+    if (!email || !pass) { alert('Please enter your email and password.'); return; }
+
+    var a = email.toLowerCase();
+    var u = JSON.parse(localStorage.getItem('users') || '{}');
+    var x = u[a];
+    if (!x) { alert('Email not found. Please sign up first.'); return; }
+    if (x.p !== pass) { alert('Wrong password. Please try again.'); return; }
+
+    localStorage.setItem('user', JSON.stringify({ name: x.n, email: a }));
+    localStorage.setItem('loggedIn', '1');
+    window.location.href = 'home.html';
+  }
+
+  function doSignup() {
+    var name  = document.getElementById('su-name').value.trim();
+    var email = document.getElementById('su-email').value.trim();
+    var pass  = document.getElementById('su-pass').value;
+    if (!name || !email || !pass) { alert('Please fill all fields.'); return; }
+    if (pass.length < 6)          { alert('Password must be at least 6 characters.'); return; }
+
+    var a = email.toLowerCase();
+    var u = JSON.parse(localStorage.getItem('users') || '{}');
+    if (u[a]) { alert('Account already exists. Please log in.'); return; }
+    u[a] = { n: name, p: pass };
+    localStorage.setItem('users', JSON.stringify(u));
+    localStorage.setItem('user', JSON.stringify({ name: name, email: a }));
+    localStorage.setItem('loggedIn', '1');
+    window.location.href = 'home.html';
+  }
+</script>
+</body>
+</html>

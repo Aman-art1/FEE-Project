@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Cart</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .qty-ctrl { display:flex; align-items:center; gap:6px; margin-top:8px; }
+    .qty-ctrl button {
+      width:28px; height:28px; border-radius:6px; border:1px solid var(--border);
+      background:var(--light); font-size:1rem; cursor:pointer; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .qty-ctrl button:hover { background:var(--terra); color:#fff; border-color:var(--terra); }
+    .qty-val { font-weight:700; font-size:0.95rem; min-width:24px; text-align:center; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo"><a href="home.html"><span>Karigar</span>Co</a></div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="cart.html" class="nav-icon">🛒<span class="badge" id="cartBadge">0</span></a>
+    <a href="wishlist.html" class="nav-icon">♡<span class="badge" id="wishBadge">0</span></a>
+    <a href="profile.html" class="nav-icon">👤</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <h1 class="page-title">My <span>Cart</span></h1>
+
+  <div class="cart-layout">
+    <!-- items injected here by renderCart() -->
+    <div class="cart-items" id="cartItems"></div>
+
+    <!-- ORDER SUMMARY -->
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+      <div class="summary-row free"><span>🚚 Shipping</span><span>FREE</span></div>
+      <div class="summary-row" style="font-size:0.8rem;color:#aaa;"><span>Free shipping over ₹999</span><span></span></div>
+      <div class="summary-row total"><span>Grand Total</span><span id="grandTotal">₹0</span></div>
+      <a href="checkout.html" class="btn btn-solid btn-full" style="margin-top:16px;">Proceed to Checkout →</a>
+      <a href="home.html" class="btn btn-gray btn-full" style="margin-top:10px;">← Continue Shopping</a>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="scroll-top" id="scrollTop">↑</a>
+<script src="script.js"></script>
+<script>
+  renderCart();
+  updateBadges();
+</script>
+</body>
+</html>
