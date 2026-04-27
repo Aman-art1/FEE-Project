@@ -95,6 +95,12 @@ function addCart(id, name, price, img, cat) {
   alert(name + ' added to cart!');
 }
 
+// ── BUY NOW (add item, then go to cart) ──────────────────────
+function buyNow(id, name, price, img, cat) {
+  addCart(id, name, price, img, cat);
+  window.location.href = 'cart.html';
+}
+
 // ── WISHLIST TOGGLE ──────────────────────────────────────────
 // btn = the heart button element, also needs data-* for product info
 function toggleWish(btn) {
