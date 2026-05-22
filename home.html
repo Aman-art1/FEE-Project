@@ -34,6 +34,24 @@
   </div>
 </section>
 
+<!-- STATS -->
+<section class="stats" aria-label="Store statistics">
+  <div class="stats-wrap">
+    <div class="stat">
+      <div class="stat-val" data-countup="45000">0</div>
+      <div class="stat-label">Items Sold <span class="plus">+</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" data-countup="10000">0</div>
+      <div class="stat-label">Customers <span class="plus">+</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" data-countup="500">0</div>
+      <div class="stat-label">Artisans <span class="plus">+</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- SEARCH -->
 <div class="search-section">
   <div class="search-wrap">
@@ -430,6 +448,13 @@
     </div>
 
   </div><!-- end product-grid -->
+
+  <div id="noProducts" class="empty-state" hidden>
+    <div class="empty-icon">🔎</div>
+    <h3>No products found</h3>
+    <p>Try a different search or switch categories.</p>
+    <button type="button" class="btn btn-outline" onclick="document.getElementById('searchInput').value=''; doSearch();">Clear Search</button>
+  </div>
 </section>
 
 <!-- ABOUT / OUR STORY -->

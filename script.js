@@ -77,8 +77,30 @@ function saveWish(w) {
 function updateBadges() {
   var cb = document.getElementById('cartBadge');
   var wb = document.getElementById('wishBadge');
-  if (cb) cb.textContent = getCart().length;
-  if (wb) wb.textContent = getWish().length;
+  var cLen = getCart().length;
+  var wLen = getWish().length;
+
+  if (cb) {
+    var prevC = parseInt(cb.dataset.prev || cb.textContent || '0', 10) || 0;
+    cb.textContent = cLen;
+    cb.dataset.prev = String(cLen);
+    if (cLen !== prevC) {
+      cb.classList.remove('pulse');
+      // force reflow to restart animation
+      void cb.offsetWidth;
+      cb.classList.add('pulse');
+    }
+  }
+  if (wb) {
+    var prevW = parseInt(wb.dataset.prev || wb.textContent || '0', 10) || 0;
+    wb.textContent = wLen;
+    wb.dataset.prev = String(wLen);
+    if (wLen !== prevW) {
+      wb.classList.remove('pulse');
+      void wb.offsetWidth;
+      wb.classList.add('pulse');
+    }
+  }
 }
 
 // ── ADD TO CART (called from home/product pages) ─────────────
@@ -92,6 +114,7 @@ function addCart(id, name, price, img, cat) {
   }
   if (!found) c.push({ id: id, name: name, price: price, img: img, cat: cat, qty: 1 });
   saveCart(c);
+  // Keep existing core behavior (alert) but avoid double alerts if triggered from UI wrappers.
   alert(name + ' added to cart!');
 }
 
@@ -114,6 +137,7 @@ function toggleWish(btn) {
     btn.dataset.wished = '0';
     btn.textContent    = '♡';
     btn.style.color    = '';
+    btn.classList.remove('is-wished');
   } else {
     // add
     var item = {
@@ -130,6 +154,7 @@ function toggleWish(btn) {
     btn.dataset.wished = '1';
     btn.textContent    = '♥';
     btn.style.color    = 'var(--terra)';
+    btn.classList.add('is-wished');
   }
   saveWish(w);
 }
@@ -440,6 +465,7 @@ function doSearch() {
     var matchC = cat === 'all' || tag.indexOf(cat) !== -1;
     c.style.display = (matchQ && matchC) ? '' : 'none';
   });
+  updateProductEmptyState();
 }
 
 // ── CATEGORY PILLS (home.html) ──────────────────────────────
@@ -458,7 +484,137 @@ function filterCat(el, cat) {
     var matchQ = q === '' || title.indexOf(q) !== -1;
     c.style.display = (matchC && matchQ) ? '' : 'none';
   });
+  updateProductEmptyState();
 }
+
+// ── UI HELPERS (no business logic changes) ───────────────────
+function updateProductEmptyState() {
+  var grid = document.getElementById('productGrid');
+  var empty = document.getElementById('noProducts');
+  if (!grid || !empty) return;
+  var cards = grid.querySelectorAll('.card');
+  var anyVisible = false;
+  cards.forEach(function (c) {
+    if (c.style.display !== 'none') anyVisible = true;
+  });
+  empty.hidden = anyVisible;
+}
+
+function animateCountUp(el, target) {
+  var dur = 1100;
+  var start = null;
+  function step(ts) {
+    if (start == null) start = ts;
+    var t = Math.min(1, (ts - start) / dur);
+    // easeOutCubic
+    var eased = 1 - Math.pow(1 - t, 3);
+    var val = Math.floor(eased * target);
+    el.textContent = val.toLocaleString('en-IN');
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('en-IN');
+  }
+  requestAnimationFrame(step);
+}
+
+function initStatsCountUp() {
+  var nodes = document.querySelectorAll('[data-countup]');
+  if (!nodes.length) return;
+
+  function run() {
+    nodes.forEach(function (n) {
+      if (n.dataset.ran === '1') return;
+      n.dataset.ran = '1';
+      var target = parseInt(n.dataset.countup || '0', 10) || 0;
+      animateCountUp(n, target);
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { run(); io.disconnect(); }
+      });
+    }, { threshold: 0.35 });
+    io.observe(nodes[0]);
+  } else {
+    run();
+  }
+}
+
+function initAddToCartMicroInteractions() {
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('button.btn') : null;
+    if (!btn) return;
+    if (!/add to cart/i.test(btn.textContent || '')) return;
+
+    // Let existing inline onclick run first; then show feedback.
+    window.setTimeout(function () {
+      var prev = btn.dataset.prevLabel || btn.textContent;
+      btn.dataset.prevLabel = prev;
+      btn.textContent = 'Added ✓';
+      btn.classList.add('is-added');
+      window.setTimeout(function () {
+        btn.textContent = prev;
+        btn.classList.remove('is-added');
+      }, 900);
+    }, 0);
+  }, true);
+}
+
+function initWishlistButtonState() {
+  document.querySelectorAll('.wish-btn').forEach(function (b) {
+    if (b.dataset.wished === '1') b.classList.add('is-wished');
+  });
+}
+
+function initHomeSkeletonLoaders() {
+  var grid = document.getElementById('productGrid');
+  if (!grid) return;
+  if (grid.dataset.skeletonRan === '1') return;
+  grid.dataset.skeletonRan = '1';
+
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+  if (!cards.length) return;
+
+  var skWrap = document.createElement('div');
+  skWrap.className = 'product-grid';
+  skWrap.style.marginTop = '0';
+  skWrap.style.gridTemplateColumns = '';
+  skWrap.setAttribute('aria-hidden', 'true');
+
+  var count = Math.min(8, cards.length);
+  for (var i = 0; i < count; i++) {
+    var sk = document.createElement('div');
+    sk.className = 'skeleton';
+    sk.innerHTML =
+      '<div class="sk-img"></div>'
+      + '<div class="sk-body">'
+      +   '<div class="sk-line w40"></div>'
+      +   '<div class="sk-line w85"></div>'
+      +   '<div class="sk-line w60"></div>'
+      +   '<div class="sk-actions"><div class="sk-btn"></div><div class="sk-btn"></div></div>'
+      + '</div>';
+    skWrap.appendChild(sk);
+  }
+
+  // Hide real cards briefly for a "loading" feel.
+  cards.forEach(function (c) { c.style.display = 'none'; });
+  grid.parentNode.insertBefore(skWrap, grid);
+
+  window.setTimeout(function () {
+    if (skWrap && skWrap.parentNode) skWrap.parentNode.removeChild(skWrap);
+    cards.forEach(function (c) { c.style.display = ''; });
+    updateProductEmptyState();
+  }, 520);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  initStatsCountUp();
+  initAddToCartMicroInteractions();
+  initWishlistButtonState();
+  initHomeSkeletonLoaders();
+  updateProductEmptyState();
+});
 
 // ── REVIEW SUBMIT (product.html) ────────────────────────────
 function submitReview(btn) {
