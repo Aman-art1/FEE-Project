@@ -647,7 +647,97 @@ function initHomeSkeletonLoaders() {
   }, 520);
 }
 
+// ── SELLER PRODUCTS (kc_products) ───────────────────────────
+function getKcProducts() {
+  return JSON.parse(localStorage.getItem('kc_products') || '[]');
+}
+function saveKcProducts(arr) {
+  localStorage.setItem('kc_products', JSON.stringify(arr));
+}
+function getSellerName() {
+  return localStorage.getItem('kc_name') || (JSON.parse(localStorage.getItem('user') || '{}').name || '');
+}
+function addCartSeller(id) {
+  var products = getKcProducts();
+  for (var i = 0; i < products.length; i++) {
+    if (String(products[i].id) === String(id)) {
+      var p = products[i];
+      addCart(String(p.id), p.name, p.price, p.image, p.category);
+      return;
+    }
+  }
+}
+function buildSellerProductCard(p) {
+  var id = String(p.id);
+  var cat = p.category || '';
+  var price = parseInt(p.price, 10) || 0;
+  var img = p.image || '';
+  var name = p.name || '';
+  var desc = (p.description || '').slice(0, 80);
+  if (p.description && p.description.length > 80) desc += '…';
+  var wished = '0';
+  var w = getWish();
+  for (var i = 0; i < w.length; i++) {
+    if (String(w[i].id) === id) { wished = '1'; break; }
+  }
+  var heart = wished === '1' ? '♥' : '♡';
+  var heartStyle = wished === '1' ? ' style="color:var(--terra);"' : '';
+  var safeName = String(name).replace(/"/g, '&quot;');
+  return '<div class="card seller-card">'
+    + '<div class="card-img">'
+    + '<img src="' + img + '" alt="' + safeName + '" />'
+    + '<button class="wish-btn seller-wish-btn" onclick="toggleWishSeller(this)" data-wished="' + wished + '"'
+    + ' data-id="' + id + '" title="Add to Wishlist"' + heartStyle + '>' + heart + '</button>'
+    + '</div>'
+    + '<div class="card-body">'
+    + '<span class="cat-tag">' + cat + '</span>'
+    + '<h3 class="card-title">' + name + '</h3>'
+    + '<p class="card-desc">' + desc + '</p>'
+    + '<div class="card-meta">'
+    + '<div><span class="stars">★★★★☆</span><span class="rating-val">New</span></div>'
+    + '<span class="price">₹' + price.toLocaleString('en-IN') + '</span>'
+    + '</div>'
+    + '<div class="card-actions">'
+    + '<a href="product.html#kc-' + id + '" class="btn btn-outline">View</a>'
+    + '<button class="btn btn-solid" onclick="addCartSeller(\'' + id + '\')">Add to Cart</button>'
+    + '</div>'
+    + '</div>'
+    + '</div>';
+}
+function toggleWishSeller(btn) {
+  var id = btn.dataset.id;
+  var products = getKcProducts();
+  for (var i = 0; i < products.length; i++) {
+    if (String(products[i].id) === String(id)) {
+      var p = products[i];
+      btn.dataset.name = p.name;
+      btn.dataset.price = p.price;
+      btn.dataset.img = p.image;
+      btn.dataset.cat = p.category;
+      toggleWish(btn);
+      return;
+    }
+  }
+}
+function renderSellerProductsOnHome() {
+  var grid = document.getElementById('productGrid');
+  if (!grid) return;
+  var products = getKcProducts();
+  if (!products.length) return;
+  var html = '';
+  for (var i = 0; i < products.length; i++) {
+    html += buildSellerProductCard(products[i]);
+  }
+  grid.insertAdjacentHTML('beforeend', html);
+  initWishlistButtonState();
+  document.querySelectorAll('.seller-card .wish-btn[data-wished="1"]').forEach(function (b) {
+    b.classList.add('is-wished');
+  });
+  if (document.getElementById('searchInput')) doSearch();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+  renderSellerProductsOnHome();
   initStatsCountUp();
   initAddToCartMicroInteractions();
   initWishlistButtonState();

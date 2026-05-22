@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Choose Your Role</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo"><span>Karigar</span>Co</div>
+  <div class="nav-links">
+    <a href="#" onclick="logout(); return false;">Logout</a>
+  </div>
+</nav>
+
+<div class="role-select-page">
+  <h1 class="role-select-title">How would you like to use <span>KarigarCo</span>?</h1>
+  <p class="role-select-sub">Choose your path — you can always switch later by logging in again.</p>
+
+  <div class="role-cards">
+    <div class="role-card" onclick="pickRole('buyer')">
+      <div class="role-card-icon">🛍</div>
+      <h2>I'm a Buyer</h2>
+      <p>Browse and buy handmade products</p>
+    </div>
+    <div class="role-card" onclick="pickRole('seller')">
+      <div class="role-card-icon">🏪</div>
+      <h2>I'm a Seller</h2>
+      <p>List your handmade products for sale</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  if (!localStorage.getItem('loggedIn')) {
+    window.location.href = 'index.html';
+  }
+  function pickRole(role) {
+    localStorage.setItem('kc_role', role);
+    if (role === 'buyer') {
+      window.location.href = 'home.html';
+    } else {
+      window.location.href = 'seller.html';
+    }
+  }
+</script>
+</body>
+</html>

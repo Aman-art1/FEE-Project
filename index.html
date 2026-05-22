@@ -170,8 +170,9 @@
     if (x.p !== pass) { alert('Wrong password. Please try again.'); return; }
 
     localStorage.setItem('user', JSON.stringify({ name: x.n, email: a }));
+    localStorage.setItem('kc_name', x.n);
     localStorage.setItem('loggedIn', '1');
-    window.location.href = 'home.html';
+    window.location.href = 'role-select.html';
   }
 
   function doSignup() {
@@ -187,8 +188,9 @@
     u[a] = { n: name, p: pass };
     localStorage.setItem('users', JSON.stringify(u));
     localStorage.setItem('user', JSON.stringify({ name: name, email: a }));
+    localStorage.setItem('kc_name', name);
     localStorage.setItem('loggedIn', '1');
-    window.location.href = 'home.html';
+    window.location.href = 'role-select.html';
   }
 </script>
 </body>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KarigarCo — Seller Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo"><span>Karigar</span>Co</div>
+</nav>
+
+<div class="seller-wrap">
+  <aside class="seller-sidebar">
+    <h3 class="seller-side-title">Seller Dashboard</h3>
+    <nav class="seller-nav">
+      <a href="#" class="active" data-view="dashboard" onclick="showView('dashboard',this);return false;">Dashboard</a>
+      <a href="#" data-view="add" onclick="showView('add',this);return false;">Add Product</a>
+      <a href="#" data-view="listings" onclick="showView('listings',this);return false;">My Listings</a>
+      <a href="#" onclick="sellerLogout();return false;">Logout</a>
+    </nav>
+  </aside>
+
+  <main class="seller-main">
+    <h1 class="page-title">Seller Dashboard</h1>
+
+    <!-- Dashboard -->
+    <div id="view-dashboard" class="seller-view">
+      <p class="seller-welcome">Welcome back, <span id="welcomeName"></span></p>
+      <div class="seller-stats">
+        <div class="seller-stat-card">
+          <div class="seller-stat-val" id="statListings">0</div>
+          <p class="seller-stat-label">Total Listings</p>
+        </div>
+        <div class="seller-stat-card">
+          <div class="seller-stat-val" id="statViews">0</div>
+          <p class="seller-stat-label">Total Views</p>
+        </div>
+        <div class="seller-stat-card">
+          <div class="seller-stat-val" id="statActive">0</div>
+          <p class="seller-stat-label">Active Products</p>
+        </div>
+      </div>
+      <h3 class="seller-section-h">Recent Listings</h3>
+      <div class="seller-table-wrap">
+        <table class="seller-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentTableBody"></tbody>
+        </table>
+      </div>
+      <p id="recentEmpty" class="seller-empty" hidden>Add your first product</p>
+    </div>
+
+    <!-- Add Product -->
+    <div id="view-add" class="seller-view" hidden>
+      <h3 class="seller-section-h">Add Product</h3>
+      <p id="addSuccess" class="seller-success" hidden>Product added successfully</p>
+      <form id="addProductForm" class="seller-form" onsubmit="submitProduct(event)">
+        <div class="form-group">
+          <label for="prodName">Product Name</label>
+          <input type="text" id="prodName" required placeholder="Product Name" />
+        </div>
+        <div class="form-group">
+          <label for="prodCat">Category</label>
+          <select id="prodCat" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="Pottery">Pottery</option>
+            <option value="Textiles">Textiles</option>
+            <option value="Jewelry">Jewelry</option>
+            <option value="Wooden">Wooden</option>
+            <option value="Paintings">Paintings</option>
+            <option value="Candles">Candles</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="prodPrice">Price</label>
+          <input type="number" id="prodPrice" min="1" required placeholder="Price" />
+        </div>
+        <div class="form-group">
+          <label for="prodDesc">Description</label>
+          <textarea id="prodDesc" rows="4" required placeholder="Description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="prodImg">Upload Photo</label>
+          <input type="file" id="prodImg" accept="image/*" required />
+        </div>
+        <button type="submit" class="btn btn-solid">Submit</button>
+      </form>
+    </div>
+
+    <!-- My Listings -->
+    <div id="view-listings" class="seller-view" hidden>
+      <h3 class="seller-section-h">My Listings</h3>
+      <div id="listingsGrid" class="seller-listings-grid"></div>
+      <p id="listingsEmpty" class="seller-empty" hidden>No products yet</p>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+  var sellerName = '';
+
+  if (!localStorage.getItem('loggedIn')) {
+    window.location.href = 'index.html';
+  } else if (localStorage.getItem('kc_role') !== 'seller') {
+    window.location.href = 'role-select.html';
+  }
+
+  sellerName = getSellerName();
+
+  function myProducts() {
+    var all = getKcProducts();
+    var out = [];
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].sellerName === sellerName) out.push(all[i]);
+    }
+    return out;
+  }
+
+  function showView(name, linkEl) {
+    var views = document.querySelectorAll('.seller-view');
+    for (var i = 0; i < views.length; i++) views[i].hidden = true;
+    document.getElementById('view-' + name).hidden = false;
+
+    var links = document.querySelectorAll('.seller-nav a[data-view]');
+    for (var j = 0; j < links.length; j++) links[j].classList.remove('active');
+    if (linkEl) linkEl.classList.add('active');
+
+    if (name === 'dashboard') renderDashboard();
+    if (name === 'listings') renderListings();
+  }
+
+  function renderDashboard() {
+    var list = myProducts();
+    document.getElementById('statListings').textContent = list.length;
+    document.getElementById('statActive').textContent = list.length;
+
+    var views = 0;
+    for (var i = 0; i < list.length; i++) views += (list[i].views || 0);
+    document.getElementById('statViews').textContent = views;
+
+    var nameEl = document.getElementById('welcomeName');
+    if (nameEl) nameEl.textContent = sellerName;
+
+    var tbody = document.getElementById('recentTableBody');
+    var empty = document.getElementById('recentEmpty');
+    if (!list.length) {
+      tbody.innerHTML = '';
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+
+    var sorted = list.slice().sort(function (a, b) {
+      return new Date(b.addedAt) - new Date(a.addedAt);
+    });
+    var recent = sorted.slice(0, 3);
+    var html = '';
+    for (var r = 0; r < recent.length; r++) {
+      var p = recent[r];
+      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td><td>₹' + (parseInt(p.price, 10) || 0).toLocaleString('en-IN') + '</td><td>—</td></tr>';
+    }
+    tbody.innerHTML = html;
+  }
+
+  function renderListings() {
+    var list = myProducts();
+    var grid = document.getElementById('listingsGrid');
+    var empty = document.getElementById('listingsEmpty');
+    if (!list.length) {
+      grid.innerHTML = '';
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+      var p = list[i];
+      html += '<div class="seller-listing-card">'
+        + '<img src="' + p.image + '" alt="' + p.name + '" />'
+        + '<div class="seller-listing-info">'
+        + '<h4>' + p.name + '</h4>'
+        + '<span class="cat-tag">' + p.category + '</span>'
+        + '<div class="price">₹' + (parseInt(p.price, 10) || 0).toLocaleString('en-IN') + '</div>'
+        + '<button type="button" class="btn btn-outline seller-del-btn" onclick="deleteProduct(' + p.id + ')">Delete</button>'
+        + '</div></div>';
+    }
+    grid.innerHTML = html;
+  }
+
+  function deleteProduct(id) {
+    if (!confirm('Delete this product?')) return;
+    var all = getKcProducts();
+    var next = [];
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].id !== id) next.push(all[i]);
+    }
+    saveKcProducts(next);
+    renderListings();
+    renderDashboard();
+  }
+
+  function submitProduct(e) {
+    e.preventDefault();
+    var name = document.getElementById('prodName').value.trim();
+    var cat = document.getElementById('prodCat').value;
+    var price = document.getElementById('prodPrice').value;
+    var desc = document.getElementById('prodDesc').value.trim();
+    var fileIn = document.getElementById('prodImg');
+    if (!name || !cat || !price || !desc || !fileIn.files.length) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    var file = fileIn.files[0];
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      var b64 = ev.target.result;
+      if (b64.length > 500000) {
+        alert('Image too large. Please use a smaller image.');
+        return;
+      }
+      var prod = {
+        id: Date.now(),
+        name: name,
+        category: cat,
+        price: parseInt(price, 10),
+        description: desc,
+        image: b64,
+        sellerName: sellerName,
+        addedAt: new Date().toISOString(),
+        views: 0
+      };
+      var arr = getKcProducts();
+      arr.push(prod);
+      saveKcProducts(arr);
+
+      document.getElementById('addSuccess').hidden = false;
+      document.getElementById('addProductForm').reset();
+      renderDashboard();
+      window.setTimeout(function () {
+        document.getElementById('addSuccess').hidden = true;
+      }, 4000);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function sellerLogout() {
+    localStorage.removeItem('kc_role');
+    window.location.href = 'index.html';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Clean up multilingual state from localStorage
+    localStorage.removeItem('kc_seller_lang');
+    localStorage.removeItem('kc_trans_hi');
+    localStorage.removeItem('kc_trans_pa');
+    localStorage.removeItem('kc_trans_ta');
+    localStorage.removeItem('kc_trans_te');
+    localStorage.removeItem('kc_trans_bn');
+    localStorage.removeItem('kc_trans_mr');
+    localStorage.removeItem('kc_trans_gu');
+    localStorage.removeItem('kc_trans_kn');
+
+    renderDashboard();
+  });
+</script>
+</body>
+</html>

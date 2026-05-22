@@ -505,6 +505,11 @@
 
 <script src="script.js"></script>
 <script>
+  if (!localStorage.getItem('loggedIn')) {
+    window.location.href = 'index.html';
+  } else if (localStorage.getItem('kc_role') === 'seller') {
+    window.location.href = 'seller.html';
+  }
   document.getElementById('searchInput').addEventListener('keyup', doSearch);
   updateBadges();
 </script>
