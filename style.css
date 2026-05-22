@@ -390,6 +390,34 @@ footer { background: var(--black); color: #ccc; padding: 56px 80px 28px; }
   line-height: 1.7;
   font-size: 0.92rem;
 }
+.order-id-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.order-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.order-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.order-status--placed { background: #e8f5e9; color: #2e7d32; }
+.order-status--cancelled { background: #ffebee; color: #c62828; }
+.order-cancelled-date { color: var(--gray); font-size: 0.82rem; margin-top: 6px; }
+.order-card--cancelled { opacity: 0.92; background: #fafafa; }
+.order-card--cancelled .order-total { color: var(--gray); text-decoration: line-through; }
+.btn-cancel-order {
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #c62828;
+  background: #fff;
+  border: 1.5px solid #ffcdd2;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-cancel-order:hover { background: #c62828; color: #fff; border-color: #c62828; }
 
 /* ===== PROFILE PAGE ===== */
 .profile-layout { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: start; }

@@ -62,6 +62,26 @@ function makeOrderId() {
   // KC + 6 digits (demo-friendly, not guaranteed unique)
   return 'KC' + Math.floor(100000 + Math.random() * 900000);
 }
+function cancelOrder(orderId) {
+  if (!confirm('Are you sure you want to cancel this order?')) return;
+  var orders = getOrders();
+  var found = false;
+  for (var i = 0; i < orders.length; i++) {
+    if (orders[i].id === orderId) {
+      if (orders[i].status === 'cancelled') {
+        alert('This order is already cancelled.');
+        return;
+      }
+      orders[i].status = 'cancelled';
+      orders[i].cancelledAt = new Date().toISOString();
+      found = true;
+      break;
+    }
+  }
+  if (!found) { alert('Order not found.'); return; }
+  saveOrders(orders);
+  renderOrders();
+}
 
 // ── WISHLIST HELPERS ────────────────────────────────────────
 function getWish() {
@@ -336,6 +356,7 @@ function placeOrder() {
 
   var order = {
     id: makeOrderId(),
+    status: 'placed',
     createdAt: new Date().toISOString(),
     items: c.map(function (x) {
       return {
@@ -426,14 +447,32 @@ function renderOrders() {
         + '</div>';
     }
 
+    var isCancelled = o.status === 'cancelled';
+    var statusHtml = isCancelled
+      ? '<span class="order-status order-status--cancelled">Cancelled</span>'
+      : '<span class="order-status order-status--placed">Placed</span>';
+    var cancelBtn = isCancelled
+      ? ''
+      : '<button type="button" class="btn-cancel-order" onclick="cancelOrder(\'' + safe(o.id || '') + '\')">Cancel Order</button>';
+    var cancelledNote = isCancelled && o.cancelledAt
+      ? '<div class="order-cancelled-date">Cancelled on ' + new Date(o.cancelledAt).toLocaleString() + '</div>'
+      : '';
+
     html +=
-      '<div class="order-card">'
+      '<div class="order-card' + (isCancelled ? ' order-card--cancelled' : '') + '">'
       + '<div class="order-head">'
       +   '<div>'
-      +     '<div class="order-id">Order ID: ' + safe(o.id || '') + '</div>'
+      +     '<div class="order-id-row">'
+      +       '<div class="order-id">Order ID: ' + safe(o.id || '') + '</div>'
+      +       statusHtml
+      +     '</div>'
       +     '<div class="order-date">' + new Date(o.createdAt || Date.now()).toLocaleString() + '</div>'
+      +     cancelledNote
       +   '</div>'
-      +   '<div class="order-total">' + money(total) + '</div>'
+      +   '<div class="order-head-right">'
+      +     '<div class="order-total">' + money(total) + '</div>'
+      +     cancelBtn
+      +   '</div>'
       + '</div>'
       + '<div class="order-grid">'
       +   '<div>'
