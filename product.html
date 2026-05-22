@@ -656,11 +656,147 @@
   </div>
 </div>
 
+<div id="product-detail-container" class="prod-panel"></div>
+
 <!-- Scroll to top -->
 <a href="#" class="scroll-top" id="scrollTop">↑</a>
 <script src="script.js"></script>
 <script>
   updateBadges();
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var hash = window.location.hash.replace('#', '');
+    
+    if (hash && hash.indexOf('kc-') === 0) {
+      var productId = parseInt(hash.replace('kc-', ''), 10);
+      
+      var all = JSON.parse(localStorage.getItem('kc_products') || '[]');
+      var prod = null;
+      for (var i = 0; i < all.length; i++) {
+        if (String(all[i].id) === String(productId)) { prod = all[i]; break; }
+      }
+      
+      var container = document.getElementById('product-detail-container');
+      if (container) {
+        if (!prod) {
+          container.innerHTML = 
+            '<div style="padding:60px;text-align:center;color:#6B7280;">' +
+            '<h2>Product not found.</h2><br><a href="home.html" style="color:var(--terra);text-decoration:underline;font-weight:600;">← Back to Home</a></div>';
+        } else {
+          renderDynamicProduct(prod);
+        }
+        container.style.display = 'block';
+      }
+    }
+  });
+
+  function renderDynamicProduct(prod) {
+    var stars = '★★★★☆';
+    var container = document.getElementById('product-detail-container');
+    
+    var wished = '0';
+    var wishList = getWish();
+    for (var j = 0; j < wishList.length; j++) {
+      if (String(wishList[j].id) === String(prod.id)) { wished = '1'; break; }
+    }
+    var heart = wished === '1' ? '♥' : '♡ Add to Wishlist';
+    var heartStyle = wished === '1' ? ' style="color:var(--terra);"' : '';
+    var wishClass = wished === '1' ? 'btn btn-gray btn-full wish-btn is-wished' : 'btn btn-gray btn-full wish-btn';
+
+    var safeName = String(prod.name).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    var safeImg = String(prod.image).replace(/'/g, "\\'");
+    var safeCat = String(prod.category).replace(/'/g, "\\'");
+
+    container.innerHTML = 
+      '<div class="product-detail">' +
+        '<div class="product-main-img">' +
+          '<img src="' + prod.image + '" alt="' + safeName + '" />' +
+        '</div>' +
+        '<div class="product-info">' +
+          '<span class="cat-tag">' + prod.category.toUpperCase() + '</span>' +
+          '<h1>' + prod.name + '</h1>' +
+          '<div class="product-stars">' +
+            '<span class="stars">' + stars + '</span>' +
+            '<span>New</span>' +
+          '</div>' +
+          '<div class="product-price">₹' + Number(prod.price).toLocaleString('en-IN') + '</div>' +
+          '<p class="product-desc">' + prod.description + '</p>' +
+          '<p style="font-size:0.85rem;color:var(--gray);margin-top:-16px;margin-bottom:24px;">' +
+            'Sold by: ' + prod.sellerName +
+          '</p>' +
+          '<div class="product-actions">' +
+            '<div class="product-actions-row">' +
+              '<button class="btn btn-outline" onclick="buyNow(\'' + prod.id + '\',\'' + safeName + '\',' + prod.price + ',\'' + safeImg + '\',\'' + safeCat + '\')">🛒 Buy Now</button>' +
+              '<button class="btn btn-solid" onclick="addCart(\'' + prod.id + '\',\'' + safeName + '\',' + prod.price + ',\'' + safeImg + '\',\'' + safeCat + '\')">Add to Cart</button>' +
+            '</div>' +
+            '<button class="' + wishClass + '" data-wished="' + wished + '" data-id="' + prod.id + '" data-name="' + safeName + '" data-price="' + prod.price + '" data-img="' + safeImg + '" data-cat="' + safeCat + '"' + heartStyle + ' onclick="toggleWish(this)">' + heart + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="reviews-section" style="margin-top:40px;">' +
+        '<div class="reviews-title">Customer Reviews</div>' +
+        '<div class="review-list">' +
+          '<p class="no-reviews-msg" style="color:var(--gray);font-size:0.9rem;">No reviews yet. Be the first to review.</p>' +
+        '</div>' +
+        '<div class="review-form">' +
+          '<h3>Write a Review</h3>' +
+          '<div class="form-group">' +
+            '<label>Your Name</label>' +
+            '<input type="text" placeholder="Enter your name" />' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Rating</label>' +
+            '<select>' +
+              '<option>★★★★★ — 5 Stars</option>' +
+              '<option>★★★★☆ — 4 Stars</option>' +
+              '<option>★★★☆☆ — 3 Stars</option>' +
+              '<option>★★☆☆☆ — 2 Stars</option>' +
+              '<option>★☆☆☆☆ — 1 Star</option>' +
+            '</select>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Your Review</label>' +
+            '<textarea rows="4" placeholder="Share your experience..."></textarea>' +
+          '</div>' +
+          '<button class="btn btn-solid" style="margin-top:8px;" onclick="submitDynReview(this)">' +
+            'Submit Review' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function submitDynReview(btn) {
+    var box = btn.closest('.review-form');
+    var nameInput = box.querySelector('input');
+    var starsSelect = box.querySelector('select');
+    var textTextArea = box.querySelector('textarea');
+    var name = nameInput.value.trim();
+    var stars = starsSelect.value.slice(0, 5);
+    var text = textTextArea.value.trim();
+    if (!name || !text) { alert('Please fill in your name and review.'); return; }
+    
+    var card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = 
+      '<div class="review-header">' +
+        '<span class="reviewer-name">' + name + '</span>' +
+        '<span class="review-stars">' + stars + '</span>' +
+      '</div>' +
+      '<p class="review-text">' + text + '</p>';
+      
+    var list = box.closest('.reviews-section').querySelector('.review-list');
+    
+    var noRevMsg = list.querySelector('.no-reviews-msg');
+    if (noRevMsg) {
+      noRevMsg.remove();
+    }
+    
+    list.insertBefore(card, list.firstChild);
+    nameInput.value = '';
+    textTextArea.value = '';
+    starsSelect.selectedIndex = 0;
+    alert('Review submitted!');
+  }
 </script>
 </body>
 </html>
